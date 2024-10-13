@@ -30,11 +30,11 @@ app.get("/alluser", async (req, res) => {
   res.send(allUser);
 });
 
-app.get("/:id", async (req, res) => {
-  const id = req.params.id;
-  const oneUser = await productModel.find({ _id: id });
-  res.send(oneUser);
-});
+// app.get("/:id", async (req, res) => {
+//   const id = req.params.id;
+//   const oneUser = await productModel.find({ _id: id });
+//   res.send(oneUser);
+// });
 
 app.post("/", async (req, res) => {
   const createData = new productModel({
