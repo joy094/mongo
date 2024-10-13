@@ -4,7 +4,8 @@ const mongoose = require("mongoose");
 const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-
+const cors = require("cors");
+app.use(cors());
 const port = 3000;
 app.listen(port, async () => {
   console.log("server is live ");
@@ -59,7 +60,9 @@ const productModel = mongoose.model("form_users", productSchema);
 
 const db = async () => {
   try {
-    await mongoose.connect("mongodb+srv://joy209422600:Az094226@cluster0.cps8w.mongodb.net/TEST_DB");
+    await mongoose.connect(
+      "mongodb+srv://joy209422600:Az094226@cluster0.cps8w.mongodb.net/TEST_DB"
+    );
     console.log("MONGO_DB IS connect");
   } catch (error) {
     console.log("db not connect");
