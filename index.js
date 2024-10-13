@@ -8,7 +8,7 @@ app.use(express.urlencoded({ extended: true }));
 const port = 3000;
 app.listen(port, async () => {
   console.log("server is live ");
-  db();
+  await db();
 });
 
 //
@@ -25,6 +25,16 @@ app.listen(port, async () => {
 app.get("/", (req, res) => {
   res.sendFile(__dirname + "/index.html");
 });
+app.get("/alluser", async (req, res) => {
+  const allUser = await productModel.find();
+  res.send(allUser);
+});
+
+app.get("/:id", async (req, res) => {
+  const id = req.params.id;
+  const oneUser = await productModel.find({ _id: id });
+  res.send(oneUser);
+});
 
 app.post("/", async (req, res) => {
   const createData = new productModel({
@@ -40,16 +50,16 @@ const productSchema = new mongoose.Schema({
   name: String,
   email: String,
   password: String,
-  createdTime: {
-    type: Date,
-    default: Date.now,
-  },
+  // createdTime: {
+  //   type: Date,
+  //   default: Date.now,
+  // },
 });
-const productModel = mongoose.model("myDB_practice", productSchema);
+const productModel = mongoose.model("form_users", productSchema);
 
 const db = async () => {
   try {
-    await mongoose.connect("mongodb://localhost:27017/PRACTIC");
+    await mongoose.connect("mongodb+srv://joy209422600:Az094226@cluster0.cps8w.mongodb.net/TEST_DB");
     console.log("MONGO_DB IS connect");
   } catch (error) {
     console.log("db not connect");
