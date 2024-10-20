@@ -33,18 +33,23 @@ app.get("/alluser", async (req, res) => {
 
 // app.get("/:id", async (req, res) => {
 //   const id = req.params.id;
-//   const oneUser = await productModel.find({ _id: id });
+//   const oneUser = await productModel.findOne({ _id: id });
 //   res.send(oneUser);
 // });
 
 app.post("/", async (req, res) => {
-  const createData = new productModel({
+  try {const createData = new productModel({
+    
     name: req.body.name,
     email: req.body.email,
     password: req.body.password,
   });
   const saveDatabase = await createData.save();
   res.send(saveDatabase);
+    
+  } catch (error) {
+    res.send(error.meassage)
+  }
 });
 
 const productSchema = new mongoose.Schema({
@@ -63,7 +68,7 @@ const db = async () => {
     await mongoose.connect(
       "mongodb+srv://joy209422600:Az094226@cluster0.cps8w.mongodb.net/TEST_DB"
     );
-    console.log("MONGO_DB IS connect");
+    console.log("MONGO_DB IS connected...");
   } catch (error) {
     console.log("db not connect");
     console.log(error);
